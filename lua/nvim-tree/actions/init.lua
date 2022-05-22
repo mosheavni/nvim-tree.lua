@@ -8,7 +8,7 @@ local nvim_tree_callback = require("nvim-tree.config").nvim_tree_callback
 
 local M = {
   mappings = {
-    { key = "M", action = "open_popup_menu"},
+    { key = "m", action = "open_popup_menu" },
     { key = { "<CR>", "o", "<2-LeftMouse>" }, action = "edit" },
     { key = "<C-e>", action = "edit_in_place" },
     { key = "O", action = "edit_no_picker" },
@@ -195,14 +195,14 @@ local function merge_mappings(user_mappings)
     if type(map.key) == "table" then
       local filtered_keys = {}
       for _, key in pairs(map.key) do
-        if not vim.tbl_contains(user_keys, key) and not vim.tbl_contains(removed_keys, key) then
+        if not vim.tbl_contains(user_keys, key:lower()) and not vim.tbl_contains(removed_keys, key:lower()) then
           table.insert(filtered_keys, key)
         end
       end
       map.key = filtered_keys
       return not vim.tbl_isempty(map.key)
     else
-      return not vim.tbl_contains(user_keys, map.key) and not vim.tbl_contains(removed_keys, map.key)
+      return not vim.tbl_contains(user_keys, map.key:lower()) and not vim.tbl_contains(removed_keys, map.key:lower())
     end
   end, M.mappings)
 
